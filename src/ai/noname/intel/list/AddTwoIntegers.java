@@ -4,34 +4,42 @@ public class AddTwoIntegers {
 
 
     public ListNode addTwoNumbersV2(ListNode l1, ListNode l2) {
-        ListNode result=new ListNode();
-        ListNode prev=result;
-        int sum=0;
-        int carry=0;
-        do{
-            sum=l1.val+l2.val+carry;
+        ListNode result = new ListNode();
+        ListNode prev = result;
+        ListNode current = null;
+        int sum = 0;
+        int carry = 0;
+        while (((l1 != null && l1.val >= 0) || (l2 != null && l2.val >= 0)||carry>0)) {
 
-            if(sum>10){
-                carry=sum%10;
-                sum=sum/10;
-            }else{
-                carry=0;
+            sum = (l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val) + carry;
+
+            if (sum > 10) {
+                carry = sum / 10;
+                sum = sum % 10;
+            } else if (sum == 10) {
+                sum = 0;
+                carry = 1;
+            } else {
+                carry = 0;
             }
 
-            System.out.println("sum::"+sum);
-            System.out.println("carry::"+carry);
-
-            if(result.next==null){
-                result.val=sum;
-            }else{
-                ListNode node=new ListNode(sum);
-                prev.next=node;
-                prev=node;
+            if (result.next == null) {
+                result.val = sum;
+                result.next = new ListNode();
+                current=result;
+            } else {
+                current = prev.next;
+                current.val = sum;
+                current.next = new ListNode();
+                prev = current;
             }
-            l1=l1.next;
-            l2=l2.next;
-        }while(l1.next!=null&&l2.next!=null);
-
+            if (l1 != null)
+                l1 = l1.next;
+            if (l2 != null)
+                l2 = l2.next;
+        }
+        if (current != null && carry==0)
+            current.next = null;
         return result;
 
     }
@@ -64,23 +72,23 @@ public class AddTwoIntegers {
         do {
             nodeval = num % 10;
             num = num / 10;
-            if(head.next==null) {
+            if (head.next == null) {
                 head.val = nodeval;
                 head.next = new ListNode();
-                prev=head;
-            }else{
-                ListNode current=prev.next;
-                current.val=nodeval;
-                current.next=new ListNode();
-                prev=current;
+                prev = head;
+            } else {
+                ListNode current = prev.next;
+                current.val = nodeval;
+                current.next = new ListNode();
+                prev = current;
             }
         } while (num == nodeval);
         return head;
     }
 
-    public int length(ListNode head){
-        int count=1;
-        while (head.next!=null) {
+    public int length(ListNode head) {
+        int count = 1;
+        while (head.next != null) {
             head = head.next;
             count++;
         }
@@ -88,12 +96,21 @@ public class AddTwoIntegers {
     }
 
     public class ListNode {
-     int val;
-      ListNode next;
-      ListNode() {}
-      ListNode(int val) { this.val = val; }
-      ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-  }
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
 
 
 }
