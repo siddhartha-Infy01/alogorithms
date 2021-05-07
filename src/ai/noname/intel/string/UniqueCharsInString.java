@@ -12,9 +12,20 @@ public class UniqueCharsInString {
         return true;
     }
 
+    public static boolean checkUniqueCharsOptimized(String str){
+        char[] strArr=str.toCharArray();
+        int[] chars=new int[128];
+        for(int i=0;i<strArr.length;i++){
+            chars[strArr[i]]++;
+            if(chars[strArr[i]]>1)
+                return false;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
-        String str="abcdefghijklmnopqrstuvwxyz";
+        String str="abcdefghijklmnop";
         System.out.println("Checking if string " + str+
-                "has unique Chars::"+checkUniqueChars(str));
+                "has unique Chars::"+checkUniqueCharsOptimized(str));
     }
 }
