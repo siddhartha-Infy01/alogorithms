@@ -1,10 +1,11 @@
 package ai.noname.intel.numbers;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class MaxSumOfNumbers {
 
-    public int maxScore(int[] input, int maxCards) {
+    public int maxScore(int[] input,int maxCards){
         int maxSum = 0;
         int sum = 0;
         int[] leftArr = new int[maxCards];
@@ -14,7 +15,7 @@ public class MaxSumOfNumbers {
         else {
             for (int i = 0; i < maxCards; i++) {
                 leftArr = Arrays.copyOfRange(input, 0, i);
-                rightArr = Arrays.copyOfRange(input, input.length-1 - maxCards + i, input.length - 1);
+                rightArr = Arrays.copyOfRange(input, input.length - maxCards + i, input.length);
                 sum = sumArr(leftArr, rightArr);
                 if (sum > maxSum)
                     maxSum = sum;
@@ -24,23 +25,29 @@ public class MaxSumOfNumbers {
     }
 
     public int sumArr(int[] leftArr, int[] rightArr) {
-        int sum = 0;
-        for (int i = 0, j = rightArr.length-1; i < leftArr.length; i++) {
-            System.out.println("leftArr"+leftArr[i]);
-            System.out.println("rightArr"+rightArr[j]);
-            if (j > 0) {
+        int sum=0;
+        int i = 0;
+
+        if(leftArr.length>rightArr.length) {
+            int[] temp=rightArr;
+            rightArr=leftArr;
+            leftArr=temp;
+        }
+        for (int j = rightArr.length-1; j >= 0; j--) {
+            if (i <= leftArr.length-1) {
                 sum = sum + leftArr[i] + rightArr[j];
-                j--;
+                i++;
             } else {
-                sum = sum + leftArr[i];
+                sum = sum + rightArr[j];
             }
         }
+
         return sum;
     }
 
     public static void main(String[] args) {
-        int[] arr = {1,2,3,4,5,6,1};
+        int[] arr = {96,90,41,82,39,74,64,50,30};
         MaxSumOfNumbers maxSumOfNumbers = new MaxSumOfNumbers();
-        System.out.println(maxSumOfNumbers.maxScore(arr, 3));
+        System.out.println(maxSumOfNumbers.maxScore(arr, 8));
     }
 }
