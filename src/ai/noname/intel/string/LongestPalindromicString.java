@@ -6,11 +6,17 @@ public class LongestPalindromicString {
         String result = "";
         while (startIdx < s.length() - 1) {
             int i = startIdx - 1, j = startIdx + 1;
-            while (i >= 0 ) {
-                String subString = s.substring(i, j+1);
+            System.out.println("i::" + i + "::j::" + j + "::startidx::" + startIdx);
+            while (i >= 0) {
+                String subString ="";
+                System.out.println("substring::" + subString);
                 if (s.charAt(i) == s.charAt(j)) {
+                    subString=s.substring(i, j + 1);
                     i--;
                     j++;
+                    if (i < 0)
+                        startIdx++;
+
                 } else {
                     startIdx++;
                     break;
@@ -24,7 +30,7 @@ public class LongestPalindromicString {
     }
 
     public static void main(String[] args) {
-        LongestPalindromicString longestPalindromicString=new LongestPalindromicString();
-        System.out.println("longestPalindromicString::"+longestPalindromicString.longestPalindrome("babad"));
+        LongestPalindromicString longestPalindromicString = new LongestPalindromicString();
+        System.out.println("longestPalindromicString::" + longestPalindromicString.longestPalindrome("cbbd"));
     }
 }
